@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewData["Title"] = "Breweries";
+}
+
+<br />
+<div id="app" v-cloak>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <div class="row">
+                <div class="col-10">
+                    <input type="text" class="form-control" v-model="searchCriteria" placeholder="Search..">
+                </div>
+                <div class="col-2">
+                    <button type="button" v-on:click="searchBreweries()" class="btn btn-primary mb-3">Search</button>
+                </div>
+            </div>
+            
+        </div>      
+        <div class="col-2"></div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <h5>List by type</h5>
+            <div class="col-6" style="flex-direction: column;">
+                <button type="button" v-on:click="getBreweriesByType('micro')" class="btn btn-secondary btn-sm mb-3">Micro</button>
+                <button type="button" v-on:click="getBreweriesByType('nano')" class="btn btn-secondary btn-sm mb-3">Nano</button>
+                <button type="button" v-on:click="getBreweriesByType('regional')" class="btn btn-secondary btn-sm mb-3">Regional</button>
+                <button type="button" v-on:click="getBreweriesByType('brewpub')" class="btn btn-secondary btn-sm mb-3">Brewpub</button>
+                <button type="button" v-on:click="getBreweriesByType('large')" class="btn btn-secondary btn-sm mb-3">Large</button>
+                <button type="button" v-on:click="getBreweriesByType('planning')" class="btn btn-secondary btn-sm mb-3">Planning</button>
+                <button type="button" v-on:click="getBreweriesByType('bar')" class="btn btn-secondary btn-sm mb-3">Bar</button>
+                <button type="button" v-on:click="getBreweriesByType('contract')" class="btn btn-secondary btn-sm mb-3">Contract</button>
+                <button type="button" v-on:click="getBreweriesByType('proprietor')" class="btn btn-secondary btn-sm mb-3">Proprietor </button>
+                <button type="button" v-on:click="getBreweriesByType('closed')" class="btn btn-secondary btn-sm mb-3">Closed</button>
+            </div>
+            
+        </div>
+        <div class="col-8" style="max-height: 525px; overflow:auto;">
+            <div v-if="isSearching">
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="list-group" v-else>
+                <div v-for="brewery in breweries" class="list-group-item list-group-item-action" v-on:click="breweryModal(brewery)">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{brewery.name}}</h5>
+                    </div>
+                    <p class="mb-1">{{brewery.city}}, {{brewery.state}}</p>
+                    <small>{{brewery.breweryType}}</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-2">
+            <h5>List by city</h5>
+            <div class="col-12">
+                <button type="button" v-on:click="getBreweriesByCity('Los angeles')" class="btn btn-secondary mb-3 btn-sm mb-3">Los Angles</button>
+                <button type="button" v-on:click="getBreweriesByCity('New York')" class="btn btn-secondary mb-3 btn-sm mb-3">New York</button>
+                <button type="button" v-on:click="getBreweriesByCity('Washington')" class="btn btn-secondary mb-3 btn-sm mb-3">Washington</button>
+                <button type="button" v-on:click="getBreweriesByCity('San Francisco')" class="btn btn-secondary mb-3 btn-sm mb-3">San Francisco</button>
+                <button type="button" v-on:click="getBreweriesByCity('Las Vegas')" class="btn btn-secondary mb-3 btn-sm mb-3">Las Vegas</button>
+                <button type="button" v-on:click="getBreweriesByCity('Miami')" class="btn btn-secondary mb-3 btn-sm mb-3">Miami</button>
+            </div>
+           
+        </div>
+    </div>
+    <partial name="_BreweryModal" />
+</div>
+
+@section Scripts{
+<script  asp-append-version="true" src="~/js/brewery.js"></script>
+ }
